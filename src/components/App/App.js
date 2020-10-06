@@ -8,37 +8,35 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      usageData: 0,
       monitorCPU: false,
+      usageData: [],
     }
     this.toggleMonitorCPU = this.toggleMonitorCPU.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
-  componentDidMount () {
+  toggleMonitorCPU() {
+    this.setState((state) => ({
+      monitorCPU: !state.monitorCPU,
+    }));
+    this.fetchData();
+  };
+
+  fetchData() {
     const interval = setInterval(() => {
-      const { monitorCPU } = this.state
-      console.log('I come first')
+      const { monitorCPU } = this.state;
       if (monitorCPU) {
-        console.log('Here I am')
         fetch('/usage-data').then(res => res.json()).then(data => {
-          if (data.usageData !== 0) {
-            this.setState({
-              usageData: data.usageData,
-            })
+          if (data.cpuPercent !== 0) {
+            this.setState((state) => ({
+              usageData: [...state.usageData, data],
+            }));
           }
         });
       }
     }, 1000);
     return () => clearInterval(interval);
   }
-
-  toggleMonitorCPU() {
-    const { monitorCPU } = this.state;
-    console.log('CLICK!');
-    this.setState({
-      monitorCPU: !monitorCPU,
-    });
-  };
 
   render() {
     const { monitorCPU, usageData } = this.state;
@@ -52,12 +50,17 @@ class App extends React.Component {
           </Row>
           <Row>
             <Col>
-              <p>Current CPU Usage = {usageData}%.</p>
+              <p>{usageData.length ? 'Current CPU Usage = ' + usageData[usageData.length - 1].cpuPercent + '%.' : ''}</p>
             </Col>
           </Row>
           <Row>
             <Col>
               <Controls monitorCPU={monitorCPU} toggleMonitorCPU={this.toggleMonitorCPU}/>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p>{'Data Points Collected = ' + usageData.length}</p>
             </Col>
           </Row>
         </Container>

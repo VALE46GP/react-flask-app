@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
-import platform, psutil
+import platform, psutil, time
 from datetime import datetime
 from flask import Flask
 
@@ -13,9 +13,10 @@ app = Flask(__name__)
 
 @app.route('/usage-data')
 def get_cpu_percent():
-    print(f"CPU Percent: {psutil.cpu_percent(.5)}")
+    print(f"CPU Percent: {psutil.cpu_percent(1)}  -------  Time: {time.time()}")
     return {
-        "usageData": psutil.cpu_percent(.5)
+        'cpuPercent': psutil.cpu_percent(1),
+        'time': time.time()
     }
 
 # def format_bytes(bytes, suffix="B"):
