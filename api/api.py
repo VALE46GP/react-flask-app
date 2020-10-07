@@ -13,9 +13,9 @@ app = Flask(__name__)
 
 @app.route('/usage-data')
 def get_cpu_percent():
-    print(f"CPU Percent: {psutil.cpu_percent(1)}  -------  Time: {time.time()}")
+    print(f"CPU Percent: {psutil.cpu_percent(.5)}  -------  Time: {time.time()}")
     return {
-        'cpuPercent': psutil.cpu_percent(1),
+        'cpuPercent': psutil.cpu_percent(.5),
         'time': time.time()
     }
 

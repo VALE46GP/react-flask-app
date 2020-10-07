@@ -1,7 +1,8 @@
 import React from 'react';
 import Controls from '../Controls/Controls';
+import Graph from '../Graph/Graph';
 import { Container, Row, Col } from 'react-bootstrap'
-import logo from '../../logo.svg';
+// import logo from '../../logo.svg';
 import './App.css';
 
 class App extends React.Component {
@@ -10,9 +11,11 @@ class App extends React.Component {
     this.state = {
       monitorCPU: false,
       usageData: [],
-    }
-    this.toggleMonitorCPU = this.toggleMonitorCPU.bind(this);
+      startTime: 0,
+    };
     this.fetchData = this.fetchData.bind(this);
+    this.formatUsageData = this.formatUsageData.bind(this);
+    this.toggleMonitorCPU = this.toggleMonitorCPU.bind(this);
   }
 
   toggleMonitorCPU() {
@@ -29,13 +32,29 @@ class App extends React.Component {
         fetch('/usage-data').then(res => res.json()).then(data => {
           if (data.cpuPercent !== 0) {
             this.setState((state) => ({
-              usageData: [...state.usageData, data],
+              usageData: [...state.usageData, this.formatUsageData(data)],
             }));
           }
         });
       }
     }, 1000);
     return () => clearInterval(interval);
+  }
+
+  // function addDataTo(chart, label, data) {
+  //   chart.data.labels.push(label);
+  //   chart.data.datasets.forEach((dataset) => {
+  //     dataset.data.push(data);
+  //   });
+  //   chart.update();
+  // }
+
+  formatUsageData(data) {
+    const { usageData } = this.state;
+    return {
+      ...data,
+      secondsFromStart: usageData.length ? Math.trunc(data.time - usageData[0].time) : 0,
+    }
   }
 
   render() {
@@ -45,7 +64,8 @@ class App extends React.Component {
         <Container className="App-container">
           <Row>
             <Col>
-              <img src={logo} className="App-logo" alt="logo"/>
+              {/*<img src={logo} className="App-logo" alt="logo"/>*/}
+              <Graph usageData={usageData} />
             </Col>
           </Row>
           <Row>
