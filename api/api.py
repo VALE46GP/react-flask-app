@@ -16,7 +16,9 @@ def get_cpu_percent():
     print(f"CPU Percent: {psutil.cpu_percent(.5)}  -------  Time: {time.time()}")
     return {
         'cpuPercent': psutil.cpu_percent(.5),
-        'time': time.time()
+        'time': time.time(),
+        'memoryTotal': psutil.virtual_memory().total,
+        'memoryAvailable': psutil.virtual_memory().available
     }
 
 # def format_bytes(bytes, suffix="B"):
@@ -31,6 +33,6 @@ def get_cpu_percent():
 #         if bytes < factor:
 #             return f"{bytes:.2f}{unit}{suffix}"
 #         bytes /= factor
-#
-# svmem = psutil.virtual_memory()
-# print(f"Memory Available: {format_bytes(svmem.available)}")
+
+# print(f"Memory Total: {format_bytes(psutil.virtual_memory().total)}")
+# print(f"Memory Available: {format_bytes(psutil.virtual_memory().available)}")

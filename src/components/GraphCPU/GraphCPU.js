@@ -1,9 +1,8 @@
 import React from 'react';
 import Chart from 'chart.js';
-import { de } from 'date-fns/locale';
-import classes from './Graph.module.css';
+import classes from './GraphCPU.module.css';
 
-class Graph extends React.Component {
+class GraphCPU extends React.Component {
   constructor(props) {
     super(props);
     this.chartRef = React.createRef();
@@ -45,6 +44,17 @@ class Graph extends React.Component {
     }));
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.data !== prevProps.data) {
+      const newData = this.formatData(this.props.data)
+      this.setState((props) => ({
+        data: newData,
+      }));
+      this.myChart.data.datasets[0].data = newData;
+      this.myChart.update();
+    }
+  }
+
   formatData(data = []) {
     const formatDate = (secs) => {
       const t = new Date(1970, 0, 1); // Epoch
@@ -55,17 +65,6 @@ class Graph extends React.Component {
       x: formatDate(p.time),
       y: p.cpuPercent,
     }));
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.data !== prevProps.data) {
-      const newData = this.formatData(this.props.data)
-      this.setState((props) => ({
-        data: newData,
-      }));
-      this.myChart.data.datasets[0].data = newData;
-      this.myChart.update();
-    }
   }
 
   render() {
@@ -82,4 +81,4 @@ class Graph extends React.Component {
   }
 }
 
-export default Graph;
+export default GraphCPU;

@@ -4,13 +4,13 @@ import './Controls.css';
 
 class Controls extends React.Component {
   render () {
-    const { monitorCPU, toggleMonitorCPU } = this.props;
+    const { monitor, togglemonitor } = this.props;
     return (
       <div className="Controls">
         <Button
-          variant={monitorCPU ? "outline-danger" : "outline-primary"}
-          onClick={toggleMonitorCPU}
-        >{monitorCPU ? "STOP" : "Monitor CPU"}</Button>
+          variant={monitor ? "outline-danger" : "outline-primary"}
+          onClick={togglemonitor}
+        >{monitor ? "STOP" : "Monitor Hardware"}</Button>
       </div>
     );
   }

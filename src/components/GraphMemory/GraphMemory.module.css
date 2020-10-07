@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.graph {
+    width: 50vw;
+    height: 50vh;
+    /*background: rgba(260, 260, 260, .75);*/
+    padding: 30px 20px 10px 20px;
+    /*border-radius: 10px;*/
+    -webkit-box-shadow: 0 10px 0 -5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 10px 0 -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 0 -5px rgba(0, 0, 0, 0.3);
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 80vw;
+    }
+}
