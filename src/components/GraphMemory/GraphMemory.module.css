@@ -4,6 +4,7 @@
     width: 100%;
 }
 
+.container_inner,
 .graph {
     width: 50vw;
     height: 50vh;

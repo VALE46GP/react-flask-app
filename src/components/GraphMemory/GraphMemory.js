@@ -20,12 +20,12 @@ class GraphMemory extends React.Component {
       data: {
         datasets: [{
           data: formattedData,
+          backgroundColor: [
+            '#029E5A',
+            '#EB4C31',
+          ]
         }],
         labels: [ 'Available', 'Used' ],
-        backgroundColor: [
-          "#029E5A",
-          "#EB4C31",
-        ]
       },
       options: {
       }
@@ -52,11 +52,13 @@ class GraphMemory extends React.Component {
   render() {
     return (
       <div className={classes.container}>
-        <div className={classes.graph}>
-          <canvas
-            id="chartMemory"
-            ref={this.chartRef}
-          />
+        <div className={classes.container_inner}>
+          <div className={classes.graph}>
+            <canvas
+              id="chartMemory"
+              ref={this.chartRef}
+            />
+          </div>
         </div>
       </div>
     )
