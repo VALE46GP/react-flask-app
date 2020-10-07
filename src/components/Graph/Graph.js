@@ -1,60 +1,70 @@
 import React from 'react';
 import Chart from 'chart.js';
+import { de } from 'date-fns/locale';
 import classes from './Graph.module.css';
 
 class Graph extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      chart: {},
-      data: {},
-    }
+    this.chartRef = React.createRef();
   }
 
-  chartRef = React.createRef();
-
   componentDidMount() {
-    const data = this.formatData(this.props.usageData);
     const ctx = this.chartRef.current.getContext('2d')
-    const cpuUsageChart = new Chart(ctx, {
+    const formattedData = this.formatData(this.props.data);
+    this.myChart = new Chart(ctx, {
       type: 'line',
-      data,
+      data: {
+        datasets: [formattedData]
+      },
       options: {
+        maintainAspectRatio: false,
         scales: {
           xAxes: [{
             type: 'time',
-            distribution: 'series',
+            distribution: 'linear',
             time: {
               displayFormats: {
                 quarter: 'h:mm:ss a'
+              },
+              unit: 'second'
+            }
+          }],
+          yAxes: [
+            {
+              ticks: {
+                min: 0
               }
             }
-          }]
+          ]
         }
       }
     });
     this.setState((props) => ({
-      chart: cpuUsageChart,
-      data,
+      data: formattedData,
     }));
   }
 
   formatData(data = []) {
+    const formatDate = (secs) => {
+      const t = new Date(1970, 0, 1); // Epoch
+      t.setSeconds(secs);
+      return t;
+    }
     return data.map((p) => ({
-      x: p.time,
+      x: formatDate(p.time),
       y: p.cpuPercent,
     }));
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.usageData !== prevProps.usageData) {
-      const newChart = this.state.chart;
-      newChart.update();
-      const newData = this.formatData(this.props.usageData)
+    if (this.props.data !== prevProps.data) {
+      const newData = this.formatData(this.props.data)
       this.setState((props) => ({
-        chart: newChart,
         data: newData,
       }));
+      this.myChart.data.datasets[0].data = newData;
+      this.myChart.update();
     }
   }
 
