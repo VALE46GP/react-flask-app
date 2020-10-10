@@ -1,8 +1,8 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import Controls from '../Controls/Controls';
 import GraphCPU from '../GraphCPU/GraphCPU';
 import GraphMemory from '../GraphMemory/GraphMemory';
-import { Container, Row, Col } from 'react-bootstrap'
 import './App.css';
 
 class App extends React.Component {
@@ -10,7 +10,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       monitor: false,
-      usageData: [],
+      usageData: [1],
     };
     this.togglemonitor = this.togglemonitor.bind(this);
   }
@@ -20,13 +20,13 @@ class App extends React.Component {
       monitor: !state.monitor,
     }));
     this.fetchData();
-  };
+  }
 
   fetchData() {
     const interval = setInterval(() => {
       const { monitor } = this.state;
       if (monitor) {
-        fetch('/usage-data').then(res => res.json()).then(data => {
+        fetch('/usage-data').then((res) => res.json()).then((data) => {
           if (data.cpuPercent !== 0) {
             this.setState((state) => ({
               usageData: [...state.usageData, data],
@@ -50,7 +50,7 @@ class App extends React.Component {
           </Row>
           <Row>
             <Col>
-              <Controls monitor={monitor} togglemonitor={this.togglemonitor}/>
+              <Controls monitor={monitor} togglemonitor={this.togglemonitor} />
             </Col>
           </Row>
           <Row>

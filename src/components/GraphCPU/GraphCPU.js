@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from 'chart.js';
+import PropTypes from 'prop-types';
 import classes from './GraphCPU.module.css';
 
 class GraphCPU extends React.Component {
@@ -9,12 +10,13 @@ class GraphCPU extends React.Component {
   }
 
   componentDidMount() {
-    const ctx = this.chartRef.current.getContext('2d')
-    const formattedData = this.formatData(this.props.data);
+    const ctx = this.chartRef.current.getContext('2d');
+    const { data } = this.props;
+    const formattedData = this.formatData(data);
     this.myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        datasets: [formattedData]
+        datasets: [formattedData],
       },
       options: {
         maintainAspectRatio: false,
@@ -24,37 +26,32 @@ class GraphCPU extends React.Component {
             distribution: 'linear',
             time: {
               displayFormats: {
-                quarter: 'h:mm:ss a'
+                quarter: 'h:mm:ss a',
               },
-              unit: 'second'
-            }
+              unit: 'second',
+            },
           }],
           yAxes: [
             {
               ticks: {
-                min: 0
-              }
-            }
-          ]
-        }
-      }
+                min: 0,
+              },
+            },
+          ],
+        },
+      },
     });
-    this.setState((props) => ({
-      data: formattedData,
-    }));
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.data !== prevProps.data) {
-      const newData = this.formatData(this.props.data)
-      this.setState((props) => ({
-        data: newData,
-      }));
-      this.myChart.data.datasets[0].data = newData;
+    const { data } = this.props;
+    if (data !== prevProps.data) {
+      this.myChart.data.datasets[0].data = this.formatData(data);
       this.myChart.update();
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   formatData(data = []) {
     const formatDate = (secs) => {
       const t = new Date(1970, 0, 1); // Epoch
@@ -80,5 +77,9 @@ class GraphCPU extends React.Component {
     )
   }
 }
+
+GraphCPU.propTypes = {
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default GraphCPU;

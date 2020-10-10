@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from 'chart.js';
+import PropTypes from 'prop-types';
 import classes from './GraphMemory.module.css';
 
 class GraphMemory extends React.Component {
@@ -10,11 +11,11 @@ class GraphMemory extends React.Component {
 
   componentDidMount() {
     const ctx = this.chartRef.current.getContext('2d');
-    // const formattedData = this.formatData(this.props.data);
-    const { memoryAvailable, memoryTotal } = this.props.data.length
-      ? this.props.data[this.props.data.length - 1]
-      : [ 0, 0 ];
-    const formattedData = [ memoryAvailable, memoryTotal - memoryAvailable ];
+    const { data } = this.props;
+    const { memoryAvailable, memoryTotal } = data.length
+      ? data[data.length - 1]
+      : [0, 0];
+    const formattedData = [memoryAvailable, memoryTotal - memoryAvailable];
     this.chartMemory = new Chart(ctx, {
       type: 'pie',
       data: {
@@ -23,28 +24,22 @@ class GraphMemory extends React.Component {
           backgroundColor: [
             '#029E5A',
             '#EB4C31',
-          ]
+          ],
         }],
-        labels: [ 'Available', 'Used' ],
+        labels: ['Available', 'Used'],
       },
       options: {
-      }
+      },
     });
-    this.setState((props) => ({
-      data: formattedData,
-    }));
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.data !== prevProps.data) {
-      const { memoryAvailable, memoryTotal } = this.props.data.length
-        ? this.props.data[this.props.data.length - 1]
+    const { data } = this.props;
+    if (data !== prevProps.data) {
+      const { memoryAvailable, memoryTotal } = data.length
+        ? data[data.length - 1]
         : 0;
-      const newData = [ memoryAvailable, memoryTotal - memoryAvailable ];
-      this.setState((props) => ({
-        data: newData,
-      }));
-      this.chartMemory.data.datasets[0].data = newData;
+      this.chartMemory.data.datasets[0].data = [memoryAvailable, memoryTotal - memoryAvailable];
       this.chartMemory.update();
     }
   }
@@ -64,5 +59,9 @@ class GraphMemory extends React.Component {
     )
   }
 }
+
+GraphMemory.propTypes = {
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default GraphMemory;
