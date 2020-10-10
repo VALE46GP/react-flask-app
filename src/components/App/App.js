@@ -10,7 +10,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       monitor: false,
-      usageData: [1],
+      usageData: [],
     };
     this.togglemonitor = this.togglemonitor.bind(this);
   }
