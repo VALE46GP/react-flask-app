@@ -22,7 +22,6 @@ class GraphCPU extends React.Component {
           borderColor: '#007bff',
           color: '#007bff',
           data: [formattedData],
-          // pointBackgroundColor: '#007bff',
         }],
       },
       options: {
@@ -45,6 +44,7 @@ class GraphCPU extends React.Component {
               displayFormats: {
                 quarter: 'h:mm:ss a',
               },
+              stepSize: 10,
               unit: 'second',
             },
           }],
@@ -56,7 +56,7 @@ class GraphCPU extends React.Component {
               },
               scaleLabel: {
                 display: true,
-                labelString: '%'
+                labelString: '%',
               },
               ticks: {
                 min: 0,
