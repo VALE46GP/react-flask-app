@@ -32,7 +32,7 @@ class App extends React.Component {
       const { monitor } = this.state;
       if (monitor) {
         fetch('/usage-data').then((res) => res.json()).then((data) => {
-          if (data.cpuPercent !== 0) {
+          if (data.cpuPercent > 0.5) {
             const newData = { clientTime: new Date(), ...data };
             this.setState((state) => ({
               usageData: [...state.usageData, newData],
