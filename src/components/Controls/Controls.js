@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button'
-import './Controls.css';
+import './Controls.module.scss';
 
 const Controls = (props) => {
   const { monitor, togglemonitor } = props;

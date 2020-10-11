@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'chart.js';
 import PropTypes from 'prop-types';
-import classes from './GraphMemory.module.css';
+import classes from './GraphMemory.module.scss';
 
 class GraphMemory extends React.Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'chart.js';
 import PropTypes from 'prop-types';
-import classes from './GraphCPU.module.css';
+import classes from './GraphCPU.module.scss';
 
 class GraphCPU extends React.Component {
   constructor(props) {

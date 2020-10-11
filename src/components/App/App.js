@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Controls from '../Controls/Controls';
 import GraphCPU from '../GraphCPU/GraphCPU';
 import GraphMemory from '../GraphMemory/GraphMemory';
-import './App.css';
+import classes from './App.module.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -41,8 +41,8 @@ class App extends React.Component {
   render() {
     const { monitor, usageData } = this.state;
     return (
-      <div className="App">
-        <Container className="App-container">
+      <div className={classes.App}>
+        <Container className={classes['App-container']}>
           <Row>
             <Col>
               <GraphCPU data={usageData} />
