@@ -32,4 +32,6 @@ Serves the app on port 3000
 
 ![react-flask-app-screenshot-2](./public/screenshots/screenshot_2.jpg)
 
-![react-flask-app-screencapture](https://react-flask-activity-monitor.s3-us-west-1.amazonaws.com/react-flask-app-video.mp4)
+## Screencapture
+
+[react-flask-app-screencapture](https://react-flask-activity-monitor.s3-us-west-1.amazonaws.com/react-flask-app-video.mp4)
