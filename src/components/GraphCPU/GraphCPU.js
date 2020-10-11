@@ -20,10 +20,13 @@ class GraphCPU extends React.Component {
           label: '%',
           backgroundColor: '#002862',
           borderColor: '#007bff',
+          color: '#007bff',
           data: [formattedData],
+          // pointBackgroundColor: '#007bff',
         }],
       },
       options: {
+        color: '#007bff',
         maintainAspectRatio: false,
         responsive: true,
         title: {
@@ -34,6 +37,10 @@ class GraphCPU extends React.Component {
           xAxes: [{
             type: 'time',
             distribution: 'linear',
+            gridLines: {
+              display: true,
+              color: '#a4a4a4',
+            },
             time: {
               displayFormats: {
                 quarter: 'h:mm:ss a',
@@ -43,6 +50,14 @@ class GraphCPU extends React.Component {
           }],
           yAxes: [
             {
+              gridLines: {
+                display: true,
+                color: '#a4a4a4',
+              },
+              scaleLabel: {
+                display: true,
+                labelString: '%'
+              },
               ticks: {
                 min: 0,
               },

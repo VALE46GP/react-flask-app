@@ -8,6 +8,7 @@ const Controls = (props) => {
   return (
     <div className={classes.Controls}>
       <Button
+        className={classes.Button}
         variant={monitor ? 'outline-danger' : 'outline-primary'}
         onClick={togglemonitor}
       >
