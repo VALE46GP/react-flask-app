@@ -1,9 +1,9 @@
 import React from 'react';
 import Chart from 'chart.js';
 import PropTypes from 'prop-types';
-import classes from './GraphMemory.module.scss';
+import classes from './GraphBattery.module.scss';
 
-class GraphMemory extends React.Component {
+class GraphBattery extends React.Component {
   constructor(props) {
     super(props);
     this.chartRef = React.createRef();
@@ -12,13 +12,16 @@ class GraphMemory extends React.Component {
   componentDidMount() {
     const ctx = this.chartRef.current.getContext('2d');
     const { data } = this.props;
-    const { memoryAvailable, memoryTotal } = data.length
-      ? data[data.length - 1]
+    const battery = data.length
+      ? data[data.length - 1].battery
       : {
-        memoryAvailable: 0,
-        memoryTotal: 0,
+        percent: 0,
+        secsleft: 0,
+        charging: false,
       };
-    const formattedData = [memoryTotal - memoryAvailable, memoryAvailable];
+    const formattedData = data.length
+      ? [battery.percent, 100 - battery.percent]
+      : [0, 0];
     this.chartMemory = new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -36,7 +39,7 @@ class GraphMemory extends React.Component {
         responsive: true,
         title: {
           display: true,
-          text: 'Memory Usage',
+          text: 'Battery',
         },
       },
     });
@@ -45,13 +48,14 @@ class GraphMemory extends React.Component {
   componentDidUpdate(prevProps) {
     const { data } = this.props;
     if (data !== prevProps.data) {
-      const { memoryAvailable, memoryTotal } = data.length
+      const { battery } = data.length
         ? data[data.length - 1]
         : {
-          memoryAvailable: 0,
-          memoryTotal: 0,
+          percent: 0,
+          secsleft: 0,
+          charging: false,
         };
-      this.chartMemory.data.datasets[0].data = [memoryAvailable, memoryTotal - memoryAvailable];
+      this.chartMemory.data.datasets[0].data = [100 - battery.percent, battery.percent];
       this.chartMemory.update();
     }
   }
@@ -72,8 +76,8 @@ class GraphMemory extends React.Component {
   }
 }
 
-GraphMemory.propTypes = {
+GraphBattery.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-export default GraphMemory;
+export default GraphBattery;

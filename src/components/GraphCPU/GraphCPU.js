@@ -30,6 +30,7 @@ class GraphCPU extends React.Component {
         responsive: true,
         title: {
           display: true,
+          drawBorder: true,
           text: 'CPU Usage',
         },
         scales: {
@@ -38,6 +39,8 @@ class GraphCPU extends React.Component {
             distribution: 'linear',
             gridLines: {
               display: true,
+              drawBorder: true,
+              drawOnChartArea: false,
               color: '#a4a4a4',
             },
             time: {

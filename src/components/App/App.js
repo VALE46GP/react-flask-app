@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Controls from '../Controls/Controls';
 import GraphCPU from '../GraphCPU/GraphCPU';
 import GraphMemory from '../GraphMemory/GraphMemory';
+import GraphBattery from '../GraphBattery/GraphBattery';
 import TableInfo from '../TableInfo/TableInfo';
 import classes from './App.module.scss';
 
@@ -71,6 +72,9 @@ class App extends React.Component {
             </Col>
             <Col>
               <TableInfo systemInfo={systemInfo} />
+            </Col>
+            <Col>
+              <GraphBattery data={usageData} />
             </Col>
           </Row>
         </Container>

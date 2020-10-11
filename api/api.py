@@ -23,6 +23,7 @@ def format_bytes(bytes, suffix="B"):
 @app.route('/usage-data')
 def get_usage_data():
     print(f">>>>>>>>> get_usage_data()")
+#     print(f">>>>>>>>> psutil.sensors_battery().percent = {psutil.sensors_battery().percent}")
     return {
         'cpuPercent': psutil.cpu_percent(.5),
         'diskSpaceAvailable': psutil.disk_usage('/').free,
