@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.container_inner,
+.table {
+    width: 40vw;
+    height: 40vh;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 80vw;
+    }
+}

@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Controls from '../Controls/Controls';
 import GraphCPU from '../GraphCPU/GraphCPU';
 import GraphMemory from '../GraphMemory/GraphMemory';
+import TableInfo from '../TableInfo/TableInfo';
 import classes from './App.module.scss';
 
 class App extends React.Component {
@@ -11,6 +12,7 @@ class App extends React.Component {
     this.state = {
       monitor: false,
       usageData: [],
+      systemInfo: {},
     };
     this.togglemonitor = this.togglemonitor.bind(this);
   }
@@ -38,8 +40,16 @@ class App extends React.Component {
     return () => clearInterval(interval);
   }
 
+  componentDidMount() {
+    fetch('/system-info').then((res) => res.json()).then((data) => {
+      this.setState(() => ({
+        systemInfo: data,
+      }));
+    });
+  }
+
   render() {
-    const { monitor, usageData } = this.state;
+    const { monitor, usageData, systemInfo } = this.state;
     return (
       <div className={classes.App}>
         <Container className={classes['App-container']}>
@@ -56,6 +66,9 @@ class App extends React.Component {
           <Row>
             <Col>
               <GraphMemory data={usageData} />
+            </Col>
+            <Col>
+              <TableInfo systemInfo={systemInfo} />
             </Col>
           </Row>
         </Container>

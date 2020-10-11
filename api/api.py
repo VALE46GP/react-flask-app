@@ -33,14 +33,19 @@ def get_cpu_percent():
         'diskSpaceTotal': psutil.disk_usage('/').total,
         'time': time.time(),
         'memoryTotal': psutil.virtual_memory().total,
-        'memoryAvailable': psutil.virtual_memory().available,
-        'systemInfo': {
-            'cpuCount': psutil.cpu_count(logical=False),
-            'diskSpaceTotal': format_bytes(psutil.disk_usage('/').total),
-            'memoryTotal': format_bytes(psutil.virtual_memory().total)
-        }
+        'memoryAvailable': psutil.virtual_memory().available
+    }
+
+@app.route('/system-info')
+def get_system_info():
+    print(f"CPU Max Freq: {format_bytes(psutil.cpu_freq().max, 'Hz')}")
+    return {
+        'cpuCount': psutil.cpu_count(logical=False),
+        'cpuMexFreq': format_bytes(psutil.cpu_freq().max * 1000000, 'Hz'),
+        'diskSpaceTotal': format_bytes(psutil.disk_usage('/').total),
+        'memoryTotal': format_bytes(psutil.virtual_memory().total)
     }
 
 # print(f"Memory Total: {format_bytes(psutil.virtual_memory().total)}")
 # print(f"Memory Available: {format_bytes(psutil.virtual_memory().available)}")
-print(f"psutil.disk_usage('/') = {format_bytes(psutil.disk_usage('/').total)}")
+print(f"diskSpaceTotal = {format_bytes(psutil.disk_usage('/').total)}")

@@ -44,8 +44,8 @@ class GraphCPU extends React.Component {
               displayFormats: {
                 quarter: 'h:mm:ss a',
               },
-              stepSize: 10,
-              unit: 'second',
+              // stepSize: 10,
+              minUnit: 'second',
             },
           }],
           yAxes: [
