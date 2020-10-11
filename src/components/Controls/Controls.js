@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button'
-import './Controls.module.scss';
+import classes from './Controls.module.scss';
 
 const Controls = (props) => {
   const { monitor, togglemonitor } = props;
   return (
-    <div className="Controls">
+    <div className={classes.Controls}>
       <Button
         variant={monitor ? 'outline-danger' : 'outline-primary'}
         onClick={togglemonitor}

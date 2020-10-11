@@ -20,6 +20,11 @@ class GraphCPU extends React.Component {
       },
       options: {
         maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: true,
+          text: 'CPU Percentage',
+        },
         scales: {
           xAxes: [{
             type: 'time',

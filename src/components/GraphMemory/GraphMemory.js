@@ -17,7 +17,7 @@ class GraphMemory extends React.Component {
       : [0, 0];
     const formattedData = [memoryAvailable, memoryTotal - memoryAvailable];
     this.chartMemory = new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         datasets: [{
           data: formattedData,
@@ -29,6 +29,11 @@ class GraphMemory extends React.Component {
         labels: ['Available', 'Used'],
       },
       options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Memory Usage',
+        },
       },
     });
   }
