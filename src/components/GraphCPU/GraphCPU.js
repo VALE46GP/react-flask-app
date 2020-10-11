@@ -16,14 +16,19 @@ class GraphCPU extends React.Component {
     this.myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        datasets: [formattedData],
+        datasets: [{
+          label: '%',
+          backgroundColor: '#002862',
+          borderColor: '#007bff',
+          data: [formattedData],
+        }],
       },
       options: {
         maintainAspectRatio: false,
         responsive: true,
         title: {
           display: true,
-          text: 'CPU Percentage',
+          text: 'CPU Usage',
         },
         scales: {
           xAxes: [{
