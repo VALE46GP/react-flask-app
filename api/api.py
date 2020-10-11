@@ -20,25 +20,26 @@ def format_bytes(bytes, suffix="B"):
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
 
-# @app.route('/time')
-# def get_current_time():
-#     return {'time': time.time()}
-
 @app.route('/usage-data')
-def get_cpu_percent():
-    print(f"CPU Percent: {psutil.cpu_percent(.5)}  -------  Time: {time.time()}")
+def get_usage_data():
+    print(f">>>>>>>>> get_usage_data()")
     return {
         'cpuPercent': psutil.cpu_percent(.5),
         'diskSpaceAvailable': psutil.disk_usage('/').free,
         'diskSpaceTotal': psutil.disk_usage('/').total,
         'time': time.time(),
         'memoryTotal': psutil.virtual_memory().total,
-        'memoryAvailable': psutil.virtual_memory().available
+        'memoryAvailable': psutil.virtual_memory().available,
+        'battery': {
+            'percent': psutil.sensors_battery().percent,
+            'secsLeft': psutil.sensors_battery().secsleft,
+            'charging': psutil.sensors_battery().power_plugged
+        }
     }
 
 @app.route('/system-info')
 def get_system_info():
-    print(f"CPU Max Freq: {format_bytes(psutil.cpu_freq().max, 'Hz')}")
+    print(f">>>>>>>>> get_system_info()")
     return {
         'cpuCount': psutil.cpu_count(logical=False),
         'cpuMexFreq': format_bytes(psutil.cpu_freq().max * 1000000, 'Hz'),
@@ -48,4 +49,4 @@ def get_system_info():
 
 # print(f"Memory Total: {format_bytes(psutil.virtual_memory().total)}")
 # print(f"Memory Available: {format_bytes(psutil.virtual_memory().available)}")
-print(f"diskSpaceTotal = {format_bytes(psutil.disk_usage('/').total)}")
+# print(f"diskSpaceTotal = {format_bytes(psutil.disk_usage('/').total)}")

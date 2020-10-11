@@ -17,11 +17,13 @@ class App extends React.Component {
     this.togglemonitor = this.togglemonitor.bind(this);
   }
 
-  togglemonitor() {
-    this.setState((state) => ({
-      monitor: !state.monitor,
-    }));
-    this.fetchData();
+  componentDidMount() {
+    fetch('/system-info').then((res) => res.json()).then((data) => {
+      const newData = { clientTime: new Date(), ...data };
+      this.setState(() => ({
+        systemInfo: newData,
+      }));
+    });
   }
 
   fetchData() {
@@ -30,8 +32,9 @@ class App extends React.Component {
       if (monitor) {
         fetch('/usage-data').then((res) => res.json()).then((data) => {
           if (data.cpuPercent !== 0) {
+            const newData = { clientTime: new Date(), ...data };
             this.setState((state) => ({
-              usageData: [...state.usageData, data],
+              usageData: [...state.usageData, newData],
             }));
           }
         });
@@ -40,12 +43,11 @@ class App extends React.Component {
     return () => clearInterval(interval);
   }
 
-  componentDidMount() {
-    fetch('/system-info').then((res) => res.json()).then((data) => {
-      this.setState(() => ({
-        systemInfo: data,
-      }));
-    });
+  togglemonitor() {
+    this.setState((state) => ({
+      monitor: !state.monitor,
+    }));
+    this.fetchData();
   }
 
   render() {

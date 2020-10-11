@@ -78,13 +78,14 @@ class GraphCPU extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   formatData(data = []) {
-    const formatDate = (secs) => {
-      const t = new Date(1970, 0, 1); // Epoch
-      t.setSeconds(secs);
-      return t;
-    }
+    // const formatDate = (secs) => {
+    //   const t = new Date(1970, 0, 1); // Epoch
+    //   t.setSeconds(secs);
+    //   return t;
+    // }
     return data.map((p) => ({
-      x: formatDate(p.time),
+      // x: formatDate(p.time),
+      x: p.clientTime,
       y: p.cpuPercent,
     }));
   }
